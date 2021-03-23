@@ -1,0 +1,29 @@
+{
+	"Configurations": {
+		"InputFolderPath": "csv_files",
+        "OutputFilePath": "BankTransactions.csv",
+		"ExceptionFiles": []
+	},
+	"Fields": {
+		"TransactionTime": {
+			"Title": ["timestamp", "date", "date_readable"],
+			"Format": "datetime"
+		},
+		"TransactionType": {
+			"Title": ["type", "transaction"],
+			"Format": "string"
+		},
+		"TransactionAmount": {
+			"Title": ["amount", "amounts", "euro.cents"],
+			"Format": "float"
+		},
+		"DebitedFrom": {
+			"Title": ["from"],
+			"Format": "integer"
+		},
+		"CreditedTo": {
+			"Title": ["to"],
+			"Format": "integer"
+		}
+	}
+}
