@@ -15,7 +15,7 @@
 		},
 		"TransactionAmount": {
 			"Title": ["amount", "amounts", "euro.cents"],
-			"Format": "float"
+			"Format": "amount"
 		},
 		"DebitedFrom": {
 			"Title": ["from"],

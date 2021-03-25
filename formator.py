@@ -22,7 +22,7 @@ def string(value):
         return value
 
 
-def float_2decimal(value):
+def amount(value):
     try:
         return round(float(value), 2) # python 3 rounding works is a bankers rounding, version 3 would be better here.
 
@@ -34,7 +34,7 @@ def float_2decimal(value):
 
 def date_time(value):
     try:
-        return dateutil.parser.parse(value).date()
+        return dateutil.parser.parse(value, dayfirst=True).date()
 
     except dateutil.parser._parser.ParserError as e:
         logging.error("{}: {}".format(type(e), e))
@@ -43,6 +43,6 @@ def date_time(value):
 convertor = {
     "datetime": date_time,
     "string": string,
-    "float": float_2decimal,
+    "amount": amount,
     "integer": integer
 }

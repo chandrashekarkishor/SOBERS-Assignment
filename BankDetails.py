@@ -187,7 +187,12 @@ def fetch_bank_details(config):
                         if isinstance(conf["value"], str):
                             bank[key] = conf["format"](row[conf["value"]])
                         elif isinstance(conf["value"], list):
-                            bank[key] = conf["format"](".".join([row[val] for val in conf["value"]]))
+                            if conf['format'].__name__ == "amount":
+                                bank[key] = conf["format"](".".join(['0' + row[val]
+                                                                     if len(row[val]) == 1
+                                                                     else row[val] for val in conf["value"]]))
+                            else:
+                                bank[key] = conf["format"](".".join([row[val] for val in conf["value"]]))
 
                     if not bank_details.update_bank_transactions(bank):
                         logging.error("cannot update to the bank details object.")
@@ -206,7 +211,8 @@ def main():
     config = get_config(CONFIG_FILE)
     if config:
         bank_transactions = fetch_bank_details(config)
-        if write_transactions_csv(bank_transactions.transactions, config["Configurations"]["OutputFilePath"]):
+        if bank_transactions and write_transactions_csv(bank_transactions.transactions,
+                                                        config["Configurations"]["OutputFilePath"]):
             logging.info("Updated Output file {} with bank details present in folder {}".format(
                 config["Configurations"]["OutputFilePath"], config["Configurations"]["InputFolderPath"]))
         else:
